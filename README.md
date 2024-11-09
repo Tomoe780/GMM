@@ -1,1 +1,1 @@
-Python code reproduction of Gaussian mixture model
+Python code reproduction of Gaussian mixture model.
