@@ -12,9 +12,9 @@ def visualize_clusters(X, labels1, labels2):
 
     scatter1 = axes[0].scatter(data_reduced[:, 0], data_reduced[:, 1],
                                c=labels1 + 1, cmap='viridis', s=100)
-    axes[0].set_title("GMC")
-    axes[0].set_xlabel('X')
-    axes[0].set_ylabel('Y')
+    axes[0].set_title("standard GMM")
+    axes[0].set_xlabel('feature X')
+    axes[0].set_ylabel('feature Y')
 
     legend1 = axes[0].legend(*scatter1.legend_elements(), title="Clusters")
     axes[0].add_artist(legend1)
@@ -22,9 +22,9 @@ def visualize_clusters(X, labels1, labels2):
 
     scatter2 = axes[1].scatter(data_reduced[:, 0], data_reduced[:, 1],
                                c=labels2 + 1, cmap='viridis', s=100)
-    axes[1].set_title("IFGMC")
-    axes[1].set_xlabel('X')
-    axes[1].set_ylabel('Y')
+    axes[1].set_title("my GMM")
+    axes[1].set_xlabel('feature X')
+    axes[1].set_ylabel('feature Y')
 
     legend2 = axes[1].legend(*scatter2.legend_elements(), title="Clusters")
     axes[1].add_artist(legend2)

@@ -4,25 +4,26 @@ from sklearn.cluster import KMeans
 
 
 class GMM:
-    def __init__(self, n_components, covariance_type='full', tol=1e-3, max_iter=100, n_init=2, reg_covar=1e-6):
+    def __init__(self, n_components, covariance_type='full', tol=1e-3, max_iter=100, n_init=1, reg_covar=1e-6,
+                 init_params='kmeans'):
         self.n_components = n_components
         self.covariance_type = covariance_type
         self.tol = tol
         self.max_iter = max_iter
         self.n_init = n_init
         self.reg_covar = reg_covar
+        self.init_params = init_params
 
     def _initialize_parameters(self, X):
         N, D = X.shape
         if self.init_params == 'kmeans':
-            kmeans = KMeans(n_clusters=self.n_components).fit(X)
+            kmeans = KMeans(n_clusters=self.n_components, n_init=self.n_init).fit(X)
             self.means_ = kmeans.cluster_centers_
             self.weights_ = np.array([np.mean(kmeans.labels_ == i) for i in range(self.n_components)])
-        else:  # random initialization
+        else:
             self.means_ = X[np.random.choice(N, self.n_components, replace=False)]
             self.weights_ = np.ones(self.n_components) / self.n_components
 
-        # Initialize covariances
         if self.covariance_type == 'full':
             self.covariances_ = np.array(
                 [np.cov(X, rowvar=False) + self.reg_covar * np.eye(D) for _ in range(self.n_components)])
@@ -70,7 +71,6 @@ class GMM:
             for i in range(self.max_iter):
                 prev_log_likelihood = log_likelihood
                 log_likelihood = self._e_step(X)
-
                 self._m_step(X)
 
                 if prev_log_likelihood is not None and abs(log_likelihood - prev_log_likelihood) < self.tol:
