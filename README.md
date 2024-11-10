@@ -1,4 +1,5 @@
 Python code reproduction of Gaussian mixture model.
+
 result1:
 ![result1.png](images%2Fresult1.png)
 result2:
